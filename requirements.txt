@@ -1,6 +1,3 @@
-# This file may be used to create an environment using:
-# $ conda create --name <env> --file <this file>
-# platform: osx-arm64
 appnope=0.1.2=py39hca03da5_1001
 asttokens=2.0.5=pyhd3eb1b0_0
 backcall=0.2.0=pyhd3eb1b0_0
