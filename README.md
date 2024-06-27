@@ -61,7 +61,7 @@ docker-compose up --build
 For multiple instances, replace the name of the docker-compose file as appropriate, and the env file. 
 
 ``` sh
-docker compose -f docker-compose.instance1.yml --env-file .env.instance1 up --build
+docker compose -f docker-compose.instance1.yml --env-file .env.instance1 up --build -d
 ``` 
 
 ### Step 5: Access Jupyter lab
