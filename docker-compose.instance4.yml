@@ -7,8 +7,8 @@ services:
       dockerfile: Dockerfile
       args:
         WORK_VOLUME_MOUNT_PATH: /home/jovyan/work
-    container_name: jupyter_instance
-    env_file: .env
+    container_name: jupyter_instance4
+    env_file: .env.instance4
     command:
       [
         "start.sh",

@@ -24,15 +24,15 @@ git clone https://github.com/zmek/queue_network_simulator.git
 cd your-repo
 ```
 
-### Step 2: Create environment files
+### Step 2: Create environment file in the root, calling it ```.env```. If creating multiple instances, save each one with a different name ```.env.instance1``` for instance1
 ```sh
 JUPYTER_PASSWORD=instance1_password
 JUPYTER_EXPOSED_PORT=8889
 ```
 
-### Step 3: Create Docker Compose Override Files
+### Step 3: Can skip if not creating multiple instances. Create Docker Compose Override Files
 
-Create Docker Compose override files for each instance. Example content is provided below:
+Create a Docker Compose files for each instance, by copying the existing one. Example content is provided below:
 
 
 ```yaml
@@ -48,12 +48,20 @@ services:
 
 Step 4: Build and Start the Instances
 
-Use Docker Compose to build and start each instance with the respective override file.
+Use Docker Compose to build and start each instance with the respective override file. -d starts the output as a daemon. Skip this if you want to see the output. 
 
-
+For a single instance, either of these will suffice
 
 ``` sh
-docker compose -f docker-compose.instance1.yml up --build -d
+docker compose -f docker-compose.yml up --build
+docker-compose up --build
+
+```
+
+For multiple instances, replace the name of the docker-compose file as appropriate, and the env file. 
+
+``` sh
+docker compose -f docker-compose.instance1.yml --env-file .env.instance1 up --build
 ``` 
 
 ### Step 5: Access Jupyter lab
@@ -64,6 +72,12 @@ Instance 1: http://localhost:8889
 Enter the token set by JUPYTER_PASSWORD in the respective .env file to log in.
 
 Stopping the Instances
+
+To stop the single instance
+```sh
+docker-compose down
+
+```
 To stop the running instances, use the following commands:
 
 Stop Instance 1
