@@ -21,7 +21,7 @@ services:
     ports:
       - "${JUPYTER_EXPOSED_PORT}:8888"
     volumes:
-      - work-volume:/home/jovyan/work/instance5
+      - work-volume-instance5:/home/jovyan/work/instance5
 
 volumes:
   work-volume-instance5:
