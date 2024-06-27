@@ -24,6 +24,6 @@ services:
       - work-volume:/home/jovyan/work//instance4
 
 volumes:
-  work-volume:
+  work-volume-instance4:
 
 
