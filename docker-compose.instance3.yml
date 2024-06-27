@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        WORK_VOLUME_MOUNT_PATH: /home/jovyan/work
+        WORK_VOLUME_MOUNT_PATH: /home/jovyan/work/instance3
     container_name: jupyter_instance3
     env_file: .env.instance3
     command:
@@ -21,7 +21,7 @@ services:
     ports:
       - "${JUPYTER_EXPOSED_PORT}:8888"
     volumes:
-      - work-volume:/home/jovyan/work
+      - work-volume:/home/jovyan/work//instance3
 
 volumes:
   work-volume:
