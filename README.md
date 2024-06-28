@@ -58,17 +58,17 @@ docker-compose up --build
 
 ```
 
-For multiple instances, replace the name of the docker-compose file as appropriate, and the env file. 
+For multiple instances, replace the name of the docker-compose file as appropriate, and the env file. Including the project name ensures that the docker system process using a different namespace for each container. 
 
 ``` sh
-docker compose -f docker-compose.instance1.yml --env-file .env.instance1 up --build -d
+docker compose -f docker-compose.instance1.yml --env-file .env.instance1 --project-name desworkshop_instance1 up --build -d
 ``` 
 
 ### Step 5: Access Jupyter lab
 
 Once the instances are running, you can access Jupyter Lab in your web browser using the following URLs:
 
-Instance 1: http://localhost:8889
+Instance 1: http://servername:8889
 Enter the token set by JUPYTER_PASSWORD in the respective .env file to log in.
 
 Stopping the Instances
