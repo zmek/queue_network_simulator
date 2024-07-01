@@ -42,6 +42,8 @@ class Patient:
         
         self.arrival_time = arrival_time
         
+        self.total_waiting_time = 0
+        
  
 
 
@@ -68,7 +70,7 @@ class PathwayModel:
        
         
         self.arrival_distribution = data["arrival_distribution"] 
-        self.arrival_distr_parameters = data["arrival_distr_parameter"]
+        self.arrival_distr_parameters = float(data["arrival_distr_parameter"])
         
         self.trajectories = data["trajectories"]
         self.traj_prop = data["traj_prop"]
@@ -147,6 +149,8 @@ class PathwayModel:
                 #record time at which the patient moves to the next node
                 move_on_time = self.env.now
                 
+                patient.total_waiting_time = patient.total_waiting_time + queue_finish - queue_start
+                
                 #record waiting time and update waiting time output
                 new_wait_time_record = pd.DataFrame({
                     "patID":[patient.id],
@@ -174,9 +178,11 @@ class PathwayModel:
                         "trajectory":[patient.traj_name],
                         "arrival_time":[patient.arrival_time],
                         "departure_time":[departure_time],
-                        "time_in_system":[departure_time - patient.arrival_time]
+                        "time_in_system":[departure_time - patient.arrival_time],
+                        "total_waiting_time":[patient.total_waiting_time]
                         })
                     self.output.time_in_system = pd.concat([self.output.time_in_system, new_time_in_system_record])
+                    
                 
         
     def run(self, run_number):
@@ -211,6 +217,7 @@ class Output:
         self.time_in_system["arrival_time"] = []
         self.time_in_system["departure_time"] = []
         self.time_in_system["time_in_system"] = []
+        self.time_in_system["total_waiting_time"] = []
         
         self.waiting_time = pd.DataFrame()
         self.waiting_time["patID"] = []
@@ -272,7 +279,7 @@ def read_input(analysisID,analysis_location):
     arrival_data = pd.read_csv(file_location+"/arrivals.txt",delimiter="\t")
     
     res["arrival_distribution"] = arrival_data["arrival_distribution"][0]
-    res["arrival_distr_parameter"] = arrival_data["daily_arrival_rate"][0]
+    res["arrival_distr_parameter"] = arrival_data["arrival_rate"][0]
     
     traj_prop = {}
     for traj in trajectories:
@@ -281,68 +288,6 @@ def read_input(analysisID,analysis_location):
 
     return res
 
-
-
-#Plots
-def plot_waiting_time(data, nodeID, start, finish, analysisID, analysis_location):
-    
-    file_name = analysis_location + "/" + analysisID + "/output" + "/" + analysisID + "_" + nodeID + "_waiting_times.png"
-    
-    time_transformation = 24
-    
-    all_results = data[1].waiting_time
-    if len(data)>1:
-        for i in range(2,len(data)):
-            all_results = pd.concat([all_results, data[i].waiting_time])
-            
-    x_max = max(all_results["waiting_time"]) * time_transformation
-           
-    plot = mpl.figure()
-    mpl.title("Waiting time distribution - node: " + nodeID)
-    mpl.xlabel("Waiting time (hours)")
-    mpl.ylabel("Proportion of patients")
-    
-    sel_records = all_results[all_results["node"]==nodeID]
-    sel_records = sel_records[sel_records["time_joined_queue"] >= start + Params.warm_up_duration]
-    sel_records = sel_records[sel_records["time_started_service"] < finish + Params.warm_up_duration]
-    
-    print(np.mean([x * time_transformation for x in sel_records["waiting_time"]]))
-    
-    mpl.hist([x * time_transformation for x in sel_records["waiting_time"]],density=True) #,bins=np.arange(start=0,stop=x_max,step=min(x_max,4)))
-    mpl.xlim(0,x_max)
-    mpl.ylim(0,1)
-    
-    mpl.show()
-    plot.savefig(file_name, dpi=1000)
-    
-    
-def plot_time_in_system(data, start, finish, analysisID, analysis_location):
-    
-    file_name = analysis_location + "/" + analysisID + "/output" + "/" + analysisID + "_time_in_system.png"
-    
-    all_results = data[1].time_in_system
-    if len(data)>1:
-        for i in range(2,len(data)):
-            all_results = pd.concat([all_results, data[i].time_in_system])
-            
-    x_max = max(all_results["time_in_system"])
-           
-    plot = mpl.figure()
-    mpl.title("Time in system distribution")
-    mpl.xlabel("Time in system (days)")
-    mpl.ylabel("Proportion of patients")
-    
-    sel_records = all_results
-    sel_records = sel_records[sel_records["arrival_time"] >= start + Params.warm_up_duration]
-    sel_records = sel_records[sel_records["departure_time"] < finish + Params.warm_up_duration]
-    
-    print(np.mean(sel_records["time_in_system"]))
-    
-    mpl.hist(sel_records["time_in_system"],density=True) #,bins=np.arange(start=0,stop=x_max,step=1))
-    mpl.xlim(0,x_max)
-    mpl.ylim(0,1)
-    mpl.show()
-    plot.savefig(file_name, dpi=1000)
 
 
 
