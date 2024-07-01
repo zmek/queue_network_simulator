@@ -2,7 +2,7 @@ FROM quay.io/jupyter/datascience-notebook:2024-03-26
 
 SHELL ["/bin/bash", "-o", "pipefail", "-e", "-u", "-x", "-c"]
 
-ARG WORK_VOLUME_MOUNT_PATH=/home/jovyan/work
+ARG WORK_VOLUME_MOUNT_PATH
 ARG GITHUB_REPO_URL=https://github.com/zmek/queue_network_simulator.git
 ARG GITHUB_REPO_BRANCH=main
 
