@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  jupyter:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        WORK_VOLUME_MOUNT_PATH: /home/jovyan/work/instance2
+    container_name: jupyter_instance2
+    env_file: .env.instance2
+    command:
+      [
+        "start.sh",
+        "jupyter",
+        "lab",
+        "--LabApp.token=${JUPYTER_PASSWORD}",
+        "--NotebookApp.notebook_dir=/home/jovyan",
+        "--ContentsManager.allow_hidden=true"
+      ]
+    ports:
+      - "${JUPYTER_EXPOSED_PORT}:8888"
+    volumes:
+      - work-volume-instance2:/home/jovyan/work/instance2
+
+volumes:
+  work-volume-instance2:
+
+

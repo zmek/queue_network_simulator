@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  jupyter:
+  jupyter-zella:
     build:
       context: .
       dockerfile: Dockerfile
@@ -13,16 +13,190 @@ services:
         "start.sh",
         "jupyter",
         "lab",
-        "--LabApp.token=${JUPYTER_PASSWORD}",
-        "--NotebookApp.notebook_dir=/home/jovyan",
+        "--LabApp.token=${JUPYTER_PASSWORD_ZELLA}",
+        "--NotebookApp.notebook_dir=/home/jovyan/work",
         "--ContentsManager.allow_hidden=true"
       ]
     ports:
-      - "${JUPYTER_EXPOSED_PORT}:8888"
+      - "${JUPYTER_PORT_ZELLA}:8888"
     volumes:
-      - work-volume:/home/jovyan/work
+      - work-volume-zella:/home/jovyan/work
+
+  jupyter-greta:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        WORK_VOLUME_MOUNT_PATH: /home/jovyan/work
+    env_file: .env
+    command:
+      [
+        "start.sh",
+        "jupyter",
+        "lab",
+        "--LabApp.token=${JUPYTER_PASSWORD_GRETA}",
+        "--NotebookApp.notebook_dir=/home/jovyan/work",
+        "--ContentsManager.allow_hidden=true"
+      ]
+    ports:
+      - "${JUPYTER_PORT_GRETA}:8888"
+    volumes:
+      - work-volume-greta:/home/jovyan/work
+
+  jupyter-yuchieh:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        WORK_VOLUME_MOUNT_PATH: /home/jovyan/work
+    env_file: .env
+    command:
+      [
+        "start.sh",
+        "jupyter",
+        "lab",
+        "--LabApp.token=${JUPYTER_PASSWORD_YUCHIEH}",
+        "--NotebookApp.notebook_dir=/home/jovyan/work",
+        "--ContentsManager.allow_hidden=true"
+      ]
+    ports:
+      - "${JUPYTER_PORT_YUCHIEH}:8888"
+    volumes:
+      - work-volume-yuchieh:/home/jovyan/work
+
+  jupyter-harinder:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        WORK_VOLUME_MOUNT_PATH: /home/jovyan/work
+    env_file: .env
+    command:
+      [
+        "start.sh",
+        "jupyter",
+        "lab",
+        "--LabApp.token=${JUPYTER_PASSWORD_HARINDER}",
+        "--NotebookApp.notebook_dir=/home/jovyan/work",
+        "--ContentsManager.allow_hidden=true"
+      ]
+    ports:
+      - "${JUPYTER_PORT_HARINDER}:8888"
+    volumes:
+      - work-volume-harinder:/home/jovyan/work
+
+  jupyter-sophie:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        WORK_VOLUME_MOUNT_PATH: /home/jovyan/work
+    env_file: .env
+    command:
+      [
+        "start.sh",
+        "jupyter",
+        "lab",
+        "--LabApp.token=${JUPYTER_PASSWORD_SOPHIE}",
+        "--NotebookApp.notebook_dir=/home/jovyan/work",
+        "--ContentsManager.allow_hidden=true"
+      ]
+    ports:
+      - "${JUPYTER_PORT_SOPHIE}:8888"
+    volumes:
+      - work-volume-sophie:/home/jovyan/work
+
+  jupyter-claire:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        WORK_VOLUME_MOUNT_PATH: /home/jovyan/work
+    env_file: .env
+    command:
+      [
+        "start.sh",
+        "jupyter",
+        "lab",
+        "--LabApp.token=${JUPYTER_PASSWORD_CLAIRE}",
+        "--NotebookApp.notebook_dir=/home/jovyan/work",
+        "--ContentsManager.allow_hidden=true"
+      ]
+    ports:
+      - "${JUPYTER_PORT_CLAIRE}:8888"
+    volumes:
+      - work-volume-claire:/home/jovyan/work
+
+  jupyter-kamini:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        WORK_VOLUME_MOUNT_PATH: /home/jovyan/work
+    env_file: .env
+    command:
+      [
+        "start.sh",
+        "jupyter",
+        "lab",
+        "--LabApp.token=${JUPYTER_PASSWORD_KAMINI}",
+        "--NotebookApp.notebook_dir=/home/jovyan/work",
+        "--ContentsManager.allow_hidden=true"
+      ]
+    ports:
+      - "${JUPYTER_PORT_KAMINI}:8888"
+    volumes:
+      - work-volume-kamini:/home/jovyan/work
+
+  jupyter-shilpa:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        WORK_VOLUME_MOUNT_PATH: /home/jovyan/work
+    env_file: .env
+    command:
+      [
+        "start.sh",
+        "jupyter",
+        "lab",
+        "--LabApp.token=${JUPYTER_PASSWORD_SHILPA}",
+        "--NotebookApp.notebook_dir=/home/jovyan/work",
+        "--ContentsManager.allow_hidden=true"
+      ]
+    ports:
+      - "${JUPYTER_PORT_SHILPA}:8888"
+    volumes:
+      - work-volume-shilpa:/home/jovyan/work
+
+  jupyter-robert:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        WORK_VOLUME_MOUNT_PATH: /home/jovyan/work
+    env_file: .env
+    command:
+      [
+        "start.sh",
+        "jupyter",
+        "lab",
+        "--LabApp.token=${JUPYTER_PASSWORD_ROBERT}",
+        "--NotebookApp.notebook_dir=/home/jovyan/work",
+        "--ContentsManager.allow_hidden=true"
+      ]
+    ports:
+      - "${JUPYTER_PORT_ROBERT}:8888"
+    volumes:
+      - work-volume-robert:/home/jovyan/work
 
 volumes:
-  work-volume:
-
-
+  work-volume-zella:
+  work-volume-greta:
+  work-volume-yuchieh:
+  work-volume-harinder:
+  work-volume-sophie:
+  work-volume-claire:
+  work-volume-kamini:
+  work-volume-shilpa:
+  work-volume-robert:
