@@ -1,2 +1,0 @@
-step	service_time_distribution	length_of_need
-clinic	exponential	4

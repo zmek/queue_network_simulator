@@ -1,3 +1,2 @@
 step	resource_name	number_of_resources	resource_cost_per_time
-ECU	ECU_bed	12	1
-ITU	ITU_bed	28	2
+clinic	bed	13	1

@@ -1,3 +1,0 @@
-step	service_time_distribution	length_of_need
-ITU	lognormal	5.4;0.54
-ECU	lognormal	0.6;0.06
