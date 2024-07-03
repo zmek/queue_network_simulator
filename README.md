@@ -30,7 +30,9 @@ JUPYTER_PASSWORD=instance1_password
 JUPYTER_EXPOSED_PORT=8889
 ```
 
-### Step 3: Can skip if not creating multiple instances. Create Docker Compose Override Files
+### Step 3: Can skip if not creating multiple instances. 
+
+#### Option 1: Create Docker Compose Override Files
 
 Create a Docker Compose files for each instance, by copying the existing one. Example content is provided below:
 
@@ -46,6 +48,8 @@ services:
 
 ```
 
+#### Option 2: Create one docker file with all services 
+
 Step 4: Build and Start the Instances
 
 Use Docker Compose to build and start each instance with the respective override file. -d starts the output as a daemon. Skip this if you want to see the output. 
@@ -58,11 +62,16 @@ docker-compose up --build
 
 ```
 
-For multiple instances, replace the name of the docker-compose file as appropriate, and the env file. Including the project name ensures that the docker system process using a different namespace for each container. 
+For multiple instances option 1, replace the name of the docker-compose file as appropriate, and the env file. Including the project name ensures that the docker system process using a different namespace for each container. 
 
 ``` sh
 docker compose -f docker-compose.instance1.yml --env-file .env.instance1 --project-name desworkshop_instance1 up --build -d
 ``` 
+
+
+```sh
+docker compose --env-file .env --project-name desworkshop-zella up --build -d jupyter-zella
+```
 
 ### Step 5: Access Jupyter lab
 
