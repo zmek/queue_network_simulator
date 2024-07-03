@@ -1,0 +1,3 @@
+step	service_time_distribution	length_of_need
+Majors	lognormal	2;0.2
+Ambicare	lognormal	4;0.2

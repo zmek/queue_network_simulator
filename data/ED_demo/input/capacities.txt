@@ -1,0 +1,4 @@
+step	resource_name	number_of_resources	resource_cost_per_time
+UTC	Urgent_Treatment_Centre	30	1
+Majors	Majors	10	2
+Ambicare	Ambulatory_care	5	2
