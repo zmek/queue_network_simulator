@@ -1,2 +1,0 @@
-arrival_distribution	daily_arrival_rate	traj1
-poisson	5.4	1

@@ -187,7 +187,7 @@ class PathwayModel:
         
     def run(self, run_number):
         
-        self.output = Output(run_number, self.node_ids, int(np.ceil( self.warm_up_duration + self.sim_duration )))
+        self.output = Output(run_number, self.node_ids, self.warm_up_duration + self.sim_duration )
         
         for key in list(self.output.resource_utilisation.keys()):
             self.output.resource_utilisation[key]["capacity"] = [self.capacities[key] for i in range(int(np.ceil(self.warm_up_duration + self.sim_duration + 2)))]

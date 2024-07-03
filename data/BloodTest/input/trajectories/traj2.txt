@@ -1,2 +1,0 @@
-step	service_time_distribution	length_of_need
-ITU	lognormal	6;0.6
