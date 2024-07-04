@@ -190,6 +190,48 @@ services:
     volumes:
       - work-volume-robert:/home/jovyan/work
 
+  jupyter-gareth:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        WORK_VOLUME_MOUNT_PATH: /home/jovyan/work
+    env_file: .env
+    command:
+      [
+        "start.sh",
+        "jupyter",
+        "lab",
+        "--LabApp.token=${JUPYTER_PASSWORD_GARETH}",
+        "--NotebookApp.notebook_dir=/home/jovyan/work",
+        "--ContentsManager.allow_hidden=true"
+      ]
+    ports:
+      - "${JUPYTER_PORT_GARETH}:8888"
+    volumes:
+      - work-volume-gareth:/home/jovyan/work
+
+  jupyter-hannah:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        WORK_VOLUME_MOUNT_PATH: /home/jovyan/work
+    env_file: .env
+    command:
+      [
+        "start.sh",
+        "jupyter",
+        "lab",
+        "--LabApp.token=${JUPYTER_PASSWORD_HANNAH}",
+        "--NotebookApp.notebook_dir=/home/jovyan/work",
+        "--ContentsManager.allow_hidden=true"
+      ]
+    ports:
+      - "${JUPYTER_PORT_HANNAH}:8888"
+    volumes:
+      - work-volume-hannah:/home/jovyan/work
+
 volumes:
   work-volume-zella:
   work-volume-greta:
@@ -200,3 +242,5 @@ volumes:
   work-volume-kamini:
   work-volume-shilpa:
   work-volume-robert:
+  work-volume-gareth:
+  work-volume-hannah:
