@@ -250,11 +250,13 @@ def read_input(analysisID,analysis_location):
     #Read and store information about trajectories
     trajectories = {}
     
-    traj_list = os.listdir(file_location + "/trajectories")
+    file_list = os.listdir(file_location + "/trajectories")
     
-    for tr in traj_list:
-        traj_name = os.path.splitext(tr)[0]
-        trajectories[traj_name] = pd.read_csv(file_location+"/trajectories/"+tr,delimiter="\t")
+    for tr in file_list:
+        file_type = os.path.splitext(tr)[1]
+        if file_type == ".txt":
+            traj_name = os.path.splitext(tr)[0]
+            trajectories[traj_name] = pd.read_csv(file_location+"/trajectories/"+tr,delimiter="\t")
     res["trajectories"] = trajectories
     
     #Read and store capacity data
