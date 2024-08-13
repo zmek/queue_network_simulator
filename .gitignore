@@ -1,6 +1,7 @@
 *.env.*
 *.DS_Store
 data/test/input/~*
+*data-raw
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
