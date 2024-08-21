@@ -1,0 +1,3 @@
+step	service_time_distribution	length_of_need
+admin	lognormal	0.05;0.005
+clin	lognormal	0.083;0.0083

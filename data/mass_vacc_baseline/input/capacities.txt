@@ -1,0 +1,5 @@
+step	resource_name	number_of_resources	resource_cost_per_time
+admin	HA	5	1
+clin	clinician	7	1
+vaccA	nurseA	2	1
+vaccB	nurseB	5	1

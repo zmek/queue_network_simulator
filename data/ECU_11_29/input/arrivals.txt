@@ -1,0 +1,2 @@
+arrival_distribution	arrival_rate	traj1	traj2	traj3	traj4	traj5
+poisson	5.4	0.24	0.70	0.02	0.02	0.02
