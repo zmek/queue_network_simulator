@@ -1,0 +1,2 @@
+arrival_distribution	arrival_rate	traj1
+poisson	5	1

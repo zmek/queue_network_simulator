@@ -1,0 +1,2 @@
+step	resource_name	number_of_resources	resource_cost_per_time
+clinic	bed	15	1

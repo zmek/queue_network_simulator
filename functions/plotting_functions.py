@@ -20,13 +20,13 @@ def plot_waiting_time(data, nodeID, start, finish, analysisID, analysis_location
     if len(data)>1:
         for i in range(2,len(data)):
             all_results = pd.concat([all_results, data[i].waiting_time])
-            
-    x_max = max(all_results["waiting_time"]) * time_transformation
-    y_max = len(all_results)
-           
+                    
     sel_records = all_results[all_results["node"]==nodeID]
     sel_records = sel_records[sel_records["time_moved_on"] >= start - 1 ]
     sel_records = sel_records[sel_records["time_moved_on"] < finish ]
+    
+    x_max = max(sel_records["waiting_time"]) * time_transformation
+    y_max = len(sel_records)
     
     avg = np.mean([x * time_transformation for x in sel_records["waiting_time"]])
     print("Expected waiting time at",nodeID,":",f"{avg:.2f}")
@@ -54,11 +54,11 @@ def plot_wait_over_time(data, start, finish, analysisID, analysis_location, time
         for i in range(2,len(data)):
             all_results = pd.concat([all_results, data[i].time_in_system])
     
-    y_max = max(all_results["total_waiting_time"]) * time_transformation
-    
     sel_records = all_results
     sel_records = sel_records[sel_records["departure_time"] >= (start - 1) ]
     sel_records = sel_records[sel_records["departure_time"] < finish ]
+    
+    y_max = max(sel_records["total_waiting_time"]) * time_transformation
     
     x_vals = [ x for x in range(start,finish) ]
     y_vals = [ 0 for y in range(start,finish) ]
@@ -82,21 +82,21 @@ def plot_wait_over_time(data, start, finish, analysisID, analysis_location, time
 
 
 
-def plot_time_in_system(data, start, finish, analysisID, analysis_location, time_transformation, bins):
+def plot_overall_time_in_system(data, start, finish, analysisID, analysis_location, time_transformation, bins):
     
-    file_name = analysis_location + "/" + analysisID + "/output" + "/" + analysisID + "_time_in_system.png"
+    file_name = analysis_location + "/" + analysisID + "/output" + "/" + analysisID + "_overall_time_in_system.png"
     
     all_results = data[1].time_in_system
     if len(data)>1:
         for i in range(2,len(data)):
             all_results = pd.concat([all_results, data[i].time_in_system])
             
-    x_max = max(all_results["time_in_system"]) * time_transformation
-    y_max = len(all_results)
-    
     sel_records = all_results
     sel_records = sel_records[sel_records["departure_time"] >= start - 1 ]
     sel_records = sel_records[sel_records["departure_time"] < finish ]
+    
+    x_max = max(sel_records["time_in_system"]) * time_transformation
+    y_max = len(sel_records)
     
     avg = np.mean([x * time_transformation for x in sel_records["time_in_system"]])
     print("Expected time spent in the system:",f"{avg:.2f}")
@@ -113,6 +113,41 @@ def plot_time_in_system(data, start, finish, analysisID, analysis_location, time
     mpl.show()
     plot.savefig(file_name, dpi=1000)
     
+    
+def plot_performance(data, target, start, finish, analysisID, analysis_location, time_transformation, bins):
+    
+    file_name = analysis_location + "/" + analysisID + "/output" + "/" + analysisID + "_performance.png"
+    
+    all_results = data[1].time_in_system
+    if len(data)>1:
+        for i in range(2,len(data)):
+            all_results = pd.concat([all_results, data[i].time_in_system])
+            
+    sel_records = all_results
+    sel_records = sel_records[sel_records["departure_time"] >= start - 1 ]
+    sel_records = sel_records[sel_records["departure_time"] < finish ]
+    
+    x_max = max(sel_records["time_in_system"]) * time_transformation
+    y_max = len(sel_records)
+    
+    within_target = sel_records[sel_records["time_in_system"]<=target]
+    
+    perf = len(within_target) / len(sel_records)
+    
+    print("Proportion of patients leaving within target time:",f"{perf*100:.2f}","%")
+    
+    plot = mpl.figure()
+    mpl.title("Proportion of patients leaving within target time:" + str(round(perf*100,2)) + "%")
+    mpl.xlabel("Time in system")
+    mpl.ylabel("Frequency")
+    
+    mpl.hist([x * time_transformation for x in sel_records["time_in_system"]],bins=bins,density=False)
+    mpl.axvline(x = target, color = 'k')
+    mpl.xlim(0,x_max)
+    #mpl.ylim(0,y_max)
+    mpl.show()
+    plot.savefig(file_name, dpi=1000)
+    
 
 def plot_total_waiting_time(data, start, finish, analysisID, analysis_location, time_transformation, bins):
     
@@ -122,13 +157,13 @@ def plot_total_waiting_time(data, start, finish, analysisID, analysis_location, 
     if len(data)>1:
         for i in range(2,len(data)):
             all_results = pd.concat([all_results, data[i].time_in_system])
-            
-    x_max = max(all_results["total_waiting_time"]) * time_transformation
-    y_max = len(all_results)
     
     sel_records = all_results
     sel_records = sel_records[sel_records["departure_time"] >= start - 1 ]
     sel_records = sel_records[sel_records["departure_time"] < finish ]
+    
+    x_max = max(sel_records["total_waiting_time"]) * time_transformation
+    y_max = len(sel_records)
     
     avg = np.mean([x * time_transformation for x in sel_records["total_waiting_time"]])
     print("Expected overall waiting time:",f"{avg:.2f}")
